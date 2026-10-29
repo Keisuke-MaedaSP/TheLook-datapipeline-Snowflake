@@ -19,3 +19,6 @@ venv/
 
 # 実行ログ
 *.log
+
+# 個人的なデータ
+/docs/for_me_only/
