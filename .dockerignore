@@ -1,0 +1,12 @@
+data/
+.git/
+**/__pycache__/
+**/*.pyc
+.venv/
+venv/
+.aws/
+**/*.p8
+**/*.pem
+**/*.key
+.env
+.env.*

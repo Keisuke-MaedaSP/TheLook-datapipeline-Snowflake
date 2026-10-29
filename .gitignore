@@ -1,0 +1,21 @@
+# 元データ・加工済みデータ
+/data/
+
+# 秘密鍵・認証情報
+*.p8
+*.pem
+*.key
+.env
+.env.*
+!.env.example
+.aws/
+
+# Pythonの一時ファイル・仮想環境
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# 実行ログ
+*.log

@@ -1,0 +1,13 @@
+services:
+  pipeline:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: thelook-pipeline:dev
+    user: "${LOCAL_UID:?LOCAL_UID is required}:${LOCAL_GID:?LOCAL_GID is required}"
+    volumes:
+      - ../data/raw:/app/data/raw:ro
+      - ../data/processed:/app/data/processed
+      - ../src:/app/src:ro
+      - ../config:/app/config:ro
+      - ../sql:/app/sql:ro

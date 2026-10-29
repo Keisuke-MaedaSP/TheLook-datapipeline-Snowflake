@@ -1,0 +1,13 @@
+{
+  "account": "CWFCAQA-FC22800",
+  "user": "THELOOK_PIPELINE_USER",
+  "authenticator": "SNOWFLAKE_JWT",
+  "role": "THELOOK_ETL_ROLE",
+  "warehouse": "THELOOK_WH",
+  "database": "THELOOK_DB",
+  "schema": "STAGING",
+  "private_key_file": "/run/secrets/snowflake_key.p8",
+  "session_parameters": {
+    "TIMEZONE": "UTC"
+  }
+}

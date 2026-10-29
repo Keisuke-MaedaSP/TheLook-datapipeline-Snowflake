@@ -1,0 +1,17 @@
+boto3==1.43.119
+botocore==1.43.119
+cffi==2.1.1
+cryptography==50.0.2
+jmespath==1.1.0
+numpy==2.5.4
+pandas==3.1.0
+protobuf==6.33.6
+pyarrow==26.0.0
+pycparser==3.12
+python-dateutil==2.9.0.post0
+pytz==2026.5
+s3transfer==0.19.3
+six==1.17.0
+snowflake-connector-python==5.1.0
+tomlkit==0.15.2
+urllib3==2.8.0

@@ -1,0 +1,26 @@
+{
+  "users": {
+    "to_datetime": ["created_at"],
+    "to_lowercase": ["email", "first_name", "last_name"],
+    "to_hash": ["email"]
+  },
+  "products": {
+    "to_lowercase": ["category", "department"]
+  },
+  "inventory_items": {
+    "to_datetime": ["created_at", "sold_at"],
+    "to_lowercase": ["product_category", "product_department"]
+  },
+  "orders": {
+    "to_datetime": ["created_at", "returned_at", "shipped_at", "delivered_at"],
+    "to_lowercase": ["status"]
+  },
+  "order_items": {
+    "to_datetime": ["created_at", "shipped_at", "delivered_at", "returned_at"],
+    "to_lowercase": ["status"]
+  },
+  "events": {
+    "to_datetime": ["created_at"]
+  },
+  "distribution_centers": {}
+}

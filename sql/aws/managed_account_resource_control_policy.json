@@ -1,0 +1,111 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyAnyoneOutsideMyOrgAndAWS",
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": [
+        "aoss:*",
+        "appconfig:*",
+        "appstream:*",
+        "autoscaling:*",
+        "codebuild:*",
+        "codecommit:*",
+        "cognito-identity:*",
+        "cognito-idp:*",
+        "comprehend:*",
+        "comprehendmedical:*",
+        "dax:*",
+        "dynamodb:*",
+        "ecr:*",
+        "health:*",
+        "kinesisvideo:*",
+        "kms:*",
+        "logs:*",
+        "s3:*",
+        "secretsmanager:*",
+        "sqs:*",
+        "sts:*",
+        "support:*",
+        "textract:*",
+        "transcribe:*",
+        "translate:*"
+      ],
+      "Condition": {
+        "StringNotEqualsIfExists": {
+          "aws:PrincipalOrgID": "${aws:ResourceOrgID}"
+        },
+        "Null": {
+          "aws:PrincipalARN": "false"
+        },
+        "BoolIfExists": {
+          "aws:PrincipalIsAWSService": "false"
+        }
+      },
+      "NotResource": "arn:aws:iam::324475349753:role/TheLookSnowflakeReadRole"
+    },
+    {
+      "Sid": "DenyOutsideOrgForSnowflakeRoleExceptSnowflake",
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": "sts:*",
+      "Resource": "arn:aws:iam::324475349753:role/TheLookSnowflakeReadRole",
+      "Condition": {
+        "StringNotEqualsIfExists": {
+          "aws:PrincipalOrgID": "${aws:ResourceOrgID}"
+        },
+        "Null": {
+          "aws:PrincipalARN": "false"
+        },
+        "BoolIfExists": {
+          "aws:PrincipalIsAWSService": "false"
+        },
+        "ArnNotEquals": {
+          "aws:PrincipalArn": "arn:aws:iam::478400397253:user/c5u82000-s"
+        }
+      }
+    },
+    {
+      "Sid": "DenyAWSWhenItsNotMyOrgsSourceAccount",
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": [
+        "aoss:*",
+        "appconfig:*",
+        "appstream:*",
+        "autoscaling:*",
+        "codebuild:*",
+        "codecommit:*",
+        "cognito-identity:*",
+        "cognito-idp:*",
+        "comprehend:*",
+        "comprehendmedical:*",
+        "dax:*",
+        "dynamodb:*",
+        "ecr:*",
+        "health:*",
+        "kinesisvideo:*",
+        "kms:*",
+        "logs:*",
+        "s3:*",
+        "secretsmanager:*",
+        "sqs:*",
+        "sts:*",
+        "support:*",
+        "textract:*",
+        "transcribe:*",
+        "translate:*"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "Null": {
+          "aws:SourceAccount": "false"
+        },
+        "StringNotEquals": {
+          "aws:SourceOrgID": "${aws:ResourceOrgID}"
+        }
+      }
+    }
+  ]
+}
