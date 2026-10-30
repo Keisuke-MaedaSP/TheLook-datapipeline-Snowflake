@@ -21,7 +21,7 @@ TheLookのeコマースデータ7テーブルを対象に、JSONで定義した�
 
 ## データと検証結果
 
-取得元：[Kaggle TheLook eCommerce](https://www.kaggle.com/datasets/daichiuchigashima/thelook-ecommerce)。今回取得したスナップショットの件数を基準とし、初期調査のBigQueryデータとは混在させません。
+データの取得元：[Kaggle TheLook eCommerce](https://www.kaggle.com/datasets/daichiuchigashima/thelook-ecommerce)
 
 | テーブル | 行数 | 列数 |
 | --- | ---: | ---: |
@@ -34,12 +34,12 @@ TheLookのeコマースデータ7テーブルを対象に、JSONで定義した�
 | events | 2,420,738 | 13 |
 | 合計 | 3,343,644 | 73 |
 
-確認済みの結果：
+#### 確認済みの結果：
 
 - 全7テーブルのCSV加工後の保存・読戻し・Snowflake格納件数が一致。
 - 全7テーブルの主キー候補のNULL・余分な重複行は0。9つの参照で非NULL値の参照先欠落は0。
 - 全12日時列でUTC型と元の欠損数を保持。文字列加工の期待値照合と、加工対象外列の値の一致を全件確認。
-- S3の全7CSV・全7ParquetでローカルとContentLengthが一致。これはサイズ確認であり、全ファイルのハッシュ照合ではありません。
+- S3の全7CSV・全7Parquetでローカルとサイズが一致。
 - 同じ未変更ファイルの再COPYがLOAD_SKIPPEDとなり、件数が増えないことを確認。
 - Pythonローダーの実CLIで一時テーブルに初回10行ロードし、途中SQLエラー時に後続が実行されないことも確認。
 
@@ -52,7 +52,7 @@ events.user_idには1,124,065件のNULLがあります。すべて匿名ユー�
 ### 実測値
 
 - 元CSV：526,472,778bytes。加工後Parquet：239,016,879bytes（約54.60%減）。加工内容も異なるため、純粋な形式だけの圧縮比較ではありません。
-- 手動COPYの報告時間：products約3秒、events約17秒。性能ベンチマークではありません。
+- 手動COPYの経過時間：products約3秒、events約17秒。性能ベンチマークではありません。
 - 直近3日間の反映済みウェアハウス計算履歴：THELOOK_WH 0.586875 credits。個別COPYの費用や保存料等を含む総請求額ではありません。
 
 ## 使用環境
@@ -60,7 +60,7 @@ events.user_idには1,124,065件のNULLがあります。すべて匿名ユー�
 - Windows上のWSL2 Ubuntu、Docker Engine、Docker Compose。
 - Python 3.12.16-slim。
 - pandas 3.1.0、PyArrow 26.0.0、boto3 1.43.119、snowflake-connector-python 5.1.0。
-- AWS CLI v2（演習時2.39.0）。
+- AWS CLI v2（作業時2.39.0）。
 - AWS S3とSnowflake：東京リージョン。
 
 直接依存はrequirements.txt、推移的依存を含む使用版はrequirements.freeze.txtに記録し、Dockerは後者からインストールします。これらは演習時に確認した版であり、将来の環境での動作や別PCでの再現を保証するものではありません。
@@ -291,12 +291,9 @@ Snowsightで次のSQLを実行し、結果を確認します。
 
 元データ・加工済みデータ・秘密鍵・.env等はGit管理対象から除外します。データの再配布可否は未確認のため、リポジトリへ含めません。環境固有の識別子はサンプルとして残しているため、利用時に変更が必要です。
 
-コード・SQL・文書はAIの支援を受けて作成しました。本人が環境で実行し、結果を確認しながら学習した成果物です。本人の判断、ヒントを受けて理解した事項、未検証の改善案を区別して説明します。
 
 ## 設計資料
 
 - [全体構成図](docs/architecture.png)
 - [パイプライン設計](docs/pipeline_design.md)
 - [権限・認証設計](docs/rbac_design.md)
-- [詳細な振り返り](docs/retrospective.md)：工程別の実績、つまずき、判断、改善候補。
-- [想定質問・回答案・アピールできること](docs/interview_notes.md)：工程別74問と全体10問。
