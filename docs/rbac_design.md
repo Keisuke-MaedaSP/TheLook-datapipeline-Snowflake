@@ -19,9 +19,9 @@ SYSADMIN
 | ロール | 現在の用途・権限 |
 | --- | --- |
 | SECURITYADMIN | カスタムロールと専用ユーザーの作成、ロール付与 |
-| SYSADMIN | THELOOK_WH、THELOOK_DB、各スキーマの所有・管理。Integrationの所有権も移管 |
+| SYSADMIN | THELOOK_WH、THELOOK_DB、各スキーマの所有・管理。Storage Integrationの所有権も移管 |
 | ACCOUNTADMIN | Storage Integrationの初期作成などの管理操作 |
-| THELOOK_ETL_ROLE | THELOOK_WH、THELOOK_DB、STAGING、IntegrationのUSAGE。STAGINGでTABLE・FILE FORMAT・STAGEを作成 |
+| THELOOK_ETL_ROLE | THELOOK_WH、THELOOK_DB、STAGING、Storage IntegrationのUSAGE。STAGINGでTABLE・FILE FORMAT・STAGEを作成 |
 | THELOOK_ANALYST_ROLE | THELOOK_WH、THELOOK_DB、ANALYTICSのUSAGE |
 
 ETLロールは自ら作成したSTAGINGのテーブル、ファイル形式、ステージを所有する。そのため権限は既存表への読取・書込だけではなく、取込み用オブジェクトの作成・変更も含む。演習では構築用と日常実行用のETLロールをさらに分割していない。
@@ -35,7 +35,7 @@ ANALYTICSは分析向け公開用として分離したが、現在はテーブ�
 - 個人の管理操作用ユーザー：KEIMAEDA。
 - Python専用ユーザー：THELOOK_PIPELINE_USER、TYPE=SERVICE。
 - 専用ユーザーにTHELOOK_ETL_ROLEを付与。初期ロールも同ロールとし、セカンダリロールは無効。
-- 初期ウェアハウスはTHELOOK_WH、初期名前空間はTHELOOK_DB.STAGING。
+- 初期ウェアハウスはTHELOOK_WH、初期スキーマはTHELOOK_DB.STAGING。
 - Python接続後のCURRENT_USER、CURRENT_ROLE、CURRENT_SECONDARY_ROLES等で実際の接続主体を確認した。
 
 専用ユーザーの鍵ペア認証を使用する。暗号化した秘密鍵はUbuntuのリポジトリ外に置き、権限600で保持する。コンテナには読取専用で渡し、パスフレーズは実行時の非表示入力から環境変数へ渡す。JSONには接続先、ロール、コンテナ内の秘密鍵パス等を記載し、秘密鍵本文とパスフレーズは記載しない。
@@ -79,7 +79,7 @@ AWSロールの信頼ポリシーは、IntegrationのDESCで得たSnowflake側IA
 2. そのロールに対するsts操作は、指定したSnowflake IAMユーザー以外の組織外主体を条件付きで拒否。
 3. AWSサービス経由の組織外ソースを拒否する元の文は保持。
 
-保存済み本文はsql/aws/managed_account_resource_control_policy.json。2026-10-29に本人がAWSから提示したJSONと照合し、保存した変更案との内容一致を確認した。
+保存済み本文はsql/aws/managed_account_resource_control_policy.json。2026/10/29に本人がAWSから提示したJSONと照合し、保存した変更案との内容一致を確認した。
 
 RCPの例外はアクセス権の付与ではない。信頼ポリシーのPrincipal・ExternalId条件、ロールのS3権限、その他適用ポリシーも評価される。このRCPは組織ルートに適用されるため、別環境へ無条件にコピーする手順にはしない。
 
@@ -87,7 +87,7 @@ RCPの例外はアクセス権の付与ではない。信頼ポリシーのPrinc
 
 UbuntuのAWS CLIでブラウザー認証し、thelookプロファイルの一時認証情報を取得してDockerへ渡す。コンテナへ渡した認証情報はスナップショットであり、内部での自動更新は実装していない。
 
-実際に確認した主体はAccountFullAccessRole。アップロード対象のraw・processedだけへ書込できる専用ロールへの絞込みは未実施。そのため、プロジェクト全体で完全な最小権限を達成済みとは説明しない。
+実際に確認した主体はAccountFullAccessRole。アップロード対象のraw・processedだけへ書込できる専用ロールへの絞込みは未実施。
 
 ## 実施した確認
 
@@ -97,7 +97,7 @@ UbuntuのAWS CLIでブラウザー認証し、thelookプロファイルの一時
 - IntegrationのREADとLISTの検証に成功。ETLロールでのLISTと全7ファイルのCOPYも成功。
 - 保存済みRCPの内容を本人提示JSONと照合。
 
-他の外部主体からの拒否、S3書込拒否、全組織ポリシーの包括的な監査は実際に試していない。接続成功だけで、あらゆる不正アクセスを防止したとの主張はしない。
+他の外部主体からの拒否、S3書込拒否、全組織ポリシーの包括的な監査は実際に試していない。
 
 ## 再構築用ファイル
 
