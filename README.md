@@ -15,7 +15,7 @@ TheLookのeコマースデータ7テーブルを対象に、JSONで定義した�
 
 ## 構成図
 
-![データの流れと認証経路](docs/architecture.png)
+![データの流れと認証経路](docs/architecture_edit.jpg)
 
 加工元はローカルのCSVです。S3のrawは原本の保管用であり、現実装はS3 rawからCSVをダウンロードして加工する構成ではありません。
 

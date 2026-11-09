@@ -79,7 +79,7 @@ AWSロールの信頼ポリシーは、IntegrationのDESCで得たSnowflake側IA
 2. そのロールに対するsts操作は、指定したSnowflake IAMユーザー以外の組織外主体を条件付きで拒否。
 3. AWSサービス経由の組織外ソースを拒否する元の文は保持。
 
-保存済み本文はsql/aws/managed_account_resource_control_policy.json。2026/10/29に本人がAWSから提示したJSONと照合し、保存した変更案との内容一致を確認した。
+保存済み本文はsql/aws/managed_account_resource_control_policy.json。2026/
 
 RCPの例外はアクセス権の付与ではない。信頼ポリシーのPrincipal・ExternalId条件、ロールのS3権限、その他適用ポリシーも評価される。このRCPは組織ルートに適用されるため、別環境へ無条件にコピーする手順にはしない。
 
@@ -95,7 +95,6 @@ UbuntuのAWS CLIでブラウザー認証し、thelookプロファイルの一時
 - 両ロールから自分の対象スキーマを選択できることを確認。
 - THELOOK_PIPELINE_USERで接続し、ETLロール・セカンダリロール無効・所定のWH/DB/スキーマを確認。
 - IntegrationのREADとLISTの検証に成功。ETLロールでのLISTと全7ファイルのCOPYも成功。
-- 保存済みRCPの内容を本人提示JSONと照合。
 
 他の外部主体からの拒否、S3書込拒否、全組織ポリシーの包括的な監査は実際に試していない。
 
