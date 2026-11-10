@@ -90,7 +90,7 @@ events.user_idには1,124,065件のNULLがあります。すべて匿名ユー�
 │   ├── copy_into/load_data.sql
 │   └── validation/
 ├── docs/
-│   ├── architecture.png
+│   ├── architecture_edit.png
 │   ├── pipeline_design.md
 │   └── rbac_design.md
 ├── data/                     # Git対象外
@@ -294,6 +294,6 @@ Snowsightで次のSQLを実行し、結果を確認します。
 
 ## 設計資料
 
-- [全体構成図](docs/architecture.png)
+- [全体構成図](docs/architecture_edit.png)
 - [パイプライン設計](docs/pipeline_design.md)
 - [権限・認証設計](docs/rbac_design.md)
