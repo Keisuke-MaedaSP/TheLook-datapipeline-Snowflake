@@ -1,4 +1,4 @@
--- Kaggle取得スナップショットの確認用。別データ版では期待件数を変更する。
+-- Kaggle取得スナップショットの確認用。
 -- SELECTによる確認SQL。NG行があってもSQL自体は正常終了する。
 USE ROLE THELOOK_ETL_ROLE;
 USE SECONDARY ROLES NONE;

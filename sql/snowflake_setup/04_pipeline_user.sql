@@ -1,4 +1,4 @@
--- 自動実行用ユーザーの作成手順（既存環境では保存だけでよい）。
+-- 自動実行用ユーザーの作成手順（既存環境では保存だけでよい）
 -- 01_roles_and_permissions.sqlの後、管理用ユーザーで実行する。
 -- IF NOT EXISTSは既存ユーザーの設定を更新しない。
 USE ROLE SECURITYADMIN;
