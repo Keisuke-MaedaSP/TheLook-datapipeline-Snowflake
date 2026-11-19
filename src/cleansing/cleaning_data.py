@@ -20,7 +20,7 @@ def to_datetime(df: pd.DataFrame, target_columns: list):
     for column in target_columns:
         df[column] = pd.to_datetime(
             df[column],
-            format="mixed",
+            format="mixed", #小数秒のあるデータにも対応
             errors="coerce",
             utc=True
         )
